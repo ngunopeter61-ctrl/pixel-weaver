@@ -542,6 +542,7 @@ import { useSearchParams } from "react-router-dom";
        {/* Travelers Step */}
        {currentStepId === "travelers" && (
          <div className="space-y-6">
+           <p className="text-xs text-muted-foreground">Maximum 20 people per booking. You can make multiple bookings.</p>
            <div className="flex items-center justify-between p-4 border rounded-xl">
              <div>
                <p className="font-semibold">Adults</p>
@@ -558,11 +559,11 @@ import { useSearchParams } from "react-router-dom";
                  <Minus className="h-4 w-4" />
                </Button>
                <span className="w-8 text-center font-bold">{numAdults}</span>
-               <Button
-                 variant="outline"
-                 size="icon"
-                 onClick={() => setNumAdults(Math.min(totalCapacity, numAdults + 1))}
-               >
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setNumAdults(Math.min(Math.min(20, totalCapacity) - numChildren, numAdults + 1))}
+                >
                  <Plus className="h-4 w-4" />
                </Button>
              </div>
@@ -587,9 +588,9 @@ import { useSearchParams } from "react-router-dom";
                <Button
                  variant="outline"
                  size="icon"
-                 onClick={() =>
-                   setNumChildren(Math.min(totalCapacity - numAdults, numChildren + 1))
-                 }
+                  onClick={() =>
+                    setNumChildren(Math.min(Math.min(20, totalCapacity) - numAdults, numChildren + 1))
+                  }
                >
                  <Plus className="h-4 w-4" />
                </Button>
