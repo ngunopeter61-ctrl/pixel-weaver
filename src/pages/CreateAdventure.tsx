@@ -230,7 +230,7 @@ const FacilityBuilder = ({ items, onChange, showErrors, onValidationFail }: Faci
                 <p className="text-[11px] text-slate-500 truncate">{item.amenities.join(", ")}</p>
                 <div className="flex gap-3 mt-0.5">
                   {item.capacity && <p className="text-[11px] text-slate-400">Capacity: {item.capacity}</p>}
-                  {item.price && <p className="text-[11px] font-bold text-[#FF7F50]">KSh {item.price}</p>}
+                  {item.price && <p className="text-[11px] font-bold text-[#FF7F50]">KSh {item.price} <span className="text-blue-500">{usdHint(parseFloat(item.price))}</span></p>}
                 </div>
               </div>
               <div className="flex gap-2 shrink-0">
