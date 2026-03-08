@@ -58,6 +58,7 @@ const CreateTripEvent = () => {
   const goBack = useSafeBack("/become-host");
   const { toast } = useToast();
   const { user } = useAuth();
+  const { usdHint } = useCurrency();
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [showReview, setShowReview] = useState(false);
