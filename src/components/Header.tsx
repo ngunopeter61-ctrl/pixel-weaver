@@ -86,7 +86,6 @@ export const Header = ({ onSearchClick, showSearchIcon = true, className, __from
           ))}
         </nav>
         <div className="flex items-center gap-1 sm:gap-2">
-          <ThemeToggle />
           <NotificationBell />
           {user ? (
             <AccountSheet>
