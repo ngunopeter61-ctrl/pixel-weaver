@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { CheckCircle2, MapPin, Clock, DollarSign, Phone, User, Calendar, Building, Users, Image as ImageIcon, Link as LinkIcon, Sparkles, Globe2 } from "lucide-react";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface FacilityWithImages {
   name: string;
