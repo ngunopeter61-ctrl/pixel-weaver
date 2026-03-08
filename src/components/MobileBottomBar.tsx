@@ -202,7 +202,7 @@ export const MobileBottomBar = () => {
             >
               <ChevronLeft size={22} />
             </button>
-            <h2 className="text-lg font-semibold">Saved Items</h2>
+            <h2 className="text-lg font-semibold">{t('nav.savedItems')}</h2>
           </div>
 
           {/*
