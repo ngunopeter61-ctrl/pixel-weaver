@@ -78,6 +78,7 @@ import { useSearchParams } from "react-router-dom";
    accentColor = "#FF7F50",
  }: MultiStepBookingProps) => {
    const { user } = useAuth();
+   const { formatPrice } = useCurrency();
   const [searchParams] = useSearchParams();
    const [currentStep, setCurrentStep] = useState(0);
    const [visitDate, setVisitDate] = useState<Date | undefined>(
