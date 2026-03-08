@@ -34,6 +34,7 @@ export const FacilityImageCard = ({
   useExternalLink = false
 }: FacilityImageCardProps) => {
   const navigate = useNavigate();
+  const { formatPrice } = useCurrency();
   const [showGallery, setShowGallery] = useState(false);
   const [showAmenities, setShowAmenities] = useState(false);
   
