@@ -169,6 +169,7 @@ const App = () => {
                     <Route path="/book/:itemType/:itemId" element={<PublicManualBooking />} />
                     <Route path="/complete-profile" element={<CompleteProfile />} />
                     <Route path="/booking/:type/:id" element={<BookingPage />} />
+                    <Route path="/trip-event-guide" element={<TripEventGuide />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </div>
