@@ -891,14 +891,82 @@ const CreateAdventure = () => {
           </div>
         </Card>
 
-        {/* Submit */}
-        <div className="mb-8">
-          <Button type="button" onClick={handleSubmit} disabled={loading}
-            className="w-full py-6 rounded-2xl font-black uppercase tracking-widest text-sm text-white"
-            style={{ background: `linear-gradient(135deg, ${COLORS.TEAL} 0%, #006666 100%)` }}>
-            {loading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Submitting...</> : "Submit for Approval"}
-          </Button>
-        </div>
+        {/* Review & Submit */}
+        {!showReview ? (
+          <div className="mb-8">
+            <Button type="button" onClick={() => {
+              setShowErrors(true);
+              if (!formData.registrationName.trim() || !formData.registrationNumber.trim() ||
+                  !formData.country || !formData.locationName.trim() || !formData.place.trim() ||
+                  !formData.latitude || !formData.description.trim() || galleryImages.length === 0) {
+                toast({ title: "Action Required", description: "Please fill in all mandatory fields.", variant: "destructive" });
+                return;
+              }
+              if (facilities.some((f) => !f.saved)) {
+                toast({ title: "Unsaved Facility", description: "Please save all facilities before submitting.", variant: "destructive" });
+                return;
+              }
+              setShowReview(true);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+              className="w-full py-6 rounded-2xl font-black uppercase tracking-widest text-sm text-white"
+              style={{ background: `linear-gradient(135deg, ${COLORS.TEAL} 0%, #006666 100%)` }}>
+              <CheckCircle2 className="h-4 w-4 mr-2" /> Review Details
+            </Button>
+          </div>
+        ) : (
+          <>
+            <ReviewStep
+              type="adventure"
+              accentColor={COLORS.TEAL}
+              data={{
+                name: formData.registrationName,
+                registrationName: formData.registrationName,
+                registrationNumber: formData.registrationNumber,
+                locationName: formData.locationName,
+                place: formData.place,
+                country: formData.country,
+                description: formData.description,
+                email: formData.email,
+                phoneNumber: formData.phoneNumber,
+                openingHours: formData.openingHours,
+                closingHours: formData.closingHours,
+                workingDays: Object.entries(workingDays).filter(([, v]) => v).map(([k]) => k),
+                entranceFeeType: formData.entranceFeeType,
+                adultPrice: formData.adultPrice,
+                childPrice: formData.childPrice,
+                latitude: formData.latitude,
+                longitude: formData.longitude,
+                generalFacilities,
+                facilities: facilities.filter(f => f.saved).map(f => ({
+                  name: f.name,
+                  price: parseFloat(f.price) || 0,
+                  capacity: parseInt(f.capacity) || null,
+                  amenities: f.amenities,
+                  images: f.previewUrls,
+                })),
+                activities: activities.filter(a => a.saved && a.name.trim()).map(a => ({
+                  name: a.name,
+                  price: parseFloat(a.price) || 0,
+                  images: a.previewUrls,
+                })),
+                galleryPreviewUrls: galleryPreviews,
+              }}
+              creatorEmail={user?.email}
+            />
+            <div className="flex gap-3 mb-8">
+              <Button onClick={() => setShowReview(false)} variant="outline"
+                className="flex-1 py-6 rounded-2xl font-black uppercase text-sm">
+                ← Edit Details
+              </Button>
+              <Button type="button" onClick={handleSubmit} disabled={loading}
+                className="flex-1 py-6 rounded-2xl font-black uppercase tracking-widest text-sm text-white"
+                style={{ background: `linear-gradient(135deg, ${COLORS.TEAL} 0%, #006666 100%)` }}>
+                {loading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Submitting...</> : "Submit for Approval"}
+              </Button>
+            </div>
+          </>
+        )}
 
       </main>
       <MobileBottomBar />

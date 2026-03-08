@@ -372,12 +372,76 @@ const CreateTripEvent = () => {
             </p>
           </Card>
 
-          {/* Submit */}
-          <div className="mb-8">
-            <Button type="button" onClick={handleSubmit} disabled={loading} className="w-full py-6 rounded-2xl font-black uppercase tracking-widest text-sm text-white" style={{ background: `linear-gradient(135deg, ${COLORS.TEAL} 0%, #006666 100%)` }}>
-              {loading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Submitting...</> : "Submit for Approval"}
-            </Button>
-          </div>
+          {/* Review & Submit */}
+          {!showReview ? (
+            <div className="mb-8">
+              <Button type="button" onClick={() => {
+                const errors: string[] = [];
+                if (!formData.name.trim()) errors.push("name");
+                if (!formData.country) errors.push("country");
+                if (!formData.place.trim()) errors.push("place");
+                if (!formData.location.trim()) errors.push("location");
+                if (!formData.is_custom_date && !formData.date) errors.push("date");
+                if (!formData.price || parseFloat(formData.price) < 0) errors.push("price");
+                if (!formData.available_tickets || parseInt(formData.available_tickets) <= 0) errors.push("available_tickets");
+                if (!formData.phone_number) errors.push("phone_number");
+                if (!formData.description.trim()) errors.push("description");
+                setValidationErrors(errors);
+                if (errors.length > 0) {
+                  toast({ title: "Required Fields", description: "Please fill in all marked fields.", variant: "destructive" });
+                  return;
+                }
+                setShowReview(true);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+                className="w-full py-6 rounded-2xl font-black uppercase tracking-widest text-sm text-white"
+                style={{ background: `linear-gradient(135deg, ${COLORS.TEAL} 0%, #006666 100%)` }}>
+                <CheckCircle2 className="h-4 w-4 mr-2" /> Review Details
+              </Button>
+            </div>
+          ) : (
+            <>
+              <ReviewStep
+                type={formData.type as 'trip' | 'event'}
+                accentColor={COLORS.TEAL}
+                data={{
+                  name: formData.name,
+                  location: formData.location,
+                  place: formData.place,
+                  country: formData.country,
+                  description: formData.description,
+                  email: formData.email,
+                  phoneNumber: formData.phone_number,
+                  openingHours: formData.opening_hours,
+                  closingHours: formData.closing_hours,
+                  workingDays: (Object.keys(workingDays) as (keyof typeof workingDays)[]).filter(day => workingDays[day]),
+                  date: formData.date,
+                  isFlexibleDate: formData.is_custom_date,
+                  flexibleDurationMonths: formData.flexible_duration_months,
+                  priceAdult: formData.price,
+                  priceChild: formData.price_child,
+                  capacity: formData.available_tickets,
+                  tripType: formData.type,
+                  latitude: formData.latitude,
+                  longitude: formData.longitude,
+                  mapLink: formData.map_link,
+                  galleryPreviewUrls: galleryImages.map(f => URL.createObjectURL(f)),
+                }}
+                creatorEmail={user?.email}
+              />
+              <div className="flex gap-3 mb-8">
+                <Button onClick={() => setShowReview(false)} variant="outline"
+                  className="flex-1 py-6 rounded-2xl font-black uppercase text-sm">
+                  ← Edit Details
+                </Button>
+                <Button type="button" onClick={handleSubmit} disabled={loading}
+                  className="flex-1 py-6 rounded-2xl font-black uppercase tracking-widest text-sm text-white"
+                  style={{ background: `linear-gradient(135deg, ${COLORS.TEAL} 0%, #006666 100%)` }}>
+                  {loading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Submitting...</> : "Submit for Approval"}
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </main>
       <MobileBottomBar />
