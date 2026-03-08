@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Images, Calendar, CheckCircle2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { ExternalBookingButton } from "./ExternalBookingDialog";
 import { FacilityAmenitiesDialog } from "./FacilityAmenitiesDialog";
 
