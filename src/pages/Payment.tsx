@@ -355,6 +355,6 @@ const StatCard = ({ icon, label, value }: { icon: React.ReactNode; label: string
       <div className="text-primary">{icon}</div>
       <span className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest">{label}</span>
     </div>
-    <p className="text-sm font-black text-foreground">{typeof value === 'string' && value.includes('KES') ? <span className="text-destructive">{value}</span> : value}</p>
+    <p className="text-sm font-black text-foreground">{value}</p>
   </div>
 );
