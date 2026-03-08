@@ -154,6 +154,7 @@ interface FacilityBuilderProps {
 const FacilityBuilder = ({
   items, onChange, showErrors, onValidationFail, showBookingLink,
 }: FacilityBuilderProps) => {
+  const { usdHint } = useCurrency();
   const update = (id: string, patch: Partial<FacilityItem>) =>
     onChange(items.map((f) => (f.id === id ? { ...f, ...patch } : f)));
 
