@@ -287,7 +287,7 @@ export default function AdminPaymentVerification() {
       
       {/* Hero Header */}
       <div className="bg-[#008080] pt-12 pb-24 px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="mx-auto container px-4">
           <Button 
             variant="ghost" 
             onClick={() => navigate("/account")} 
