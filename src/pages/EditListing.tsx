@@ -58,6 +58,7 @@ interface Booking {
 const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 const EditListing = () => {
+  const { formatPrice, usdHint } = useCurrency();
   const { itemType: type, id } = useParams<{ itemType: string; id: string }>();
   const { user } = useAuth();
   const navigate = useNavigate();
