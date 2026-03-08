@@ -10,6 +10,7 @@ import { useSearchParams } from "react-router-dom";
  import { cn } from "@/lib/utils";
  import { useAuth } from "@/contexts/AuthContext";
  import { supabase } from "@/integrations/supabase/client";
+ import { useCurrency } from "@/contexts/CurrencyContext";
  
  export interface BookingFormData {
    visit_date: string;
@@ -77,6 +78,7 @@ import { useSearchParams } from "react-router-dom";
    accentColor = "#FF7F50",
  }: MultiStepBookingProps) => {
    const { user } = useAuth();
+   const { formatPrice } = useCurrency();
   const [searchParams] = useSearchParams();
    const [currentStep, setCurrentStep] = useState(0);
    const [visitDate, setVisitDate] = useState<Date | undefined>(
@@ -374,7 +376,7 @@ import { useSearchParams } from "react-router-dom";
                   <div>
                     <p className="font-medium">{facility.name}</p>
                     <p className="text-sm text-muted-foreground">
-                      KES {facility.price.toLocaleString()} per night
+                      {formatPrice(facility.price)} per night
                     </p>
                   </div>
                   <div
@@ -425,7 +427,7 @@ import { useSearchParams } from "react-router-dom";
                     {selected?.startDate && selected?.endDate && (
                       <div className="col-span-2 text-sm font-medium" style={{ color: primaryColor }}>
                         {Math.max(1, Math.ceil((new Date(selected.endDate).getTime() - new Date(selected.startDate).getTime()) / (1000 * 60 * 60 * 24)))} nights - 
-                        KES {(facility.price * Math.max(1, Math.ceil((new Date(selected.endDate).getTime() - new Date(selected.startDate).getTime()) / (1000 * 60 * 60 * 24)))).toLocaleString()}
+                        {formatPrice(facility.price * Math.max(1, Math.ceil((new Date(selected.endDate).getTime() - new Date(selected.startDate).getTime()) / (1000 * 60 * 60 * 24))))}
                       </div>
                     )}
                   </div>
@@ -463,7 +465,7 @@ import { useSearchParams } from "react-router-dom";
                   <div>
                     <p className="font-medium">{activity.name}</p>
                     <p className="text-sm text-muted-foreground">
-                      KES {activity.price.toLocaleString()} per person
+                      {formatPrice(activity.price)} per person
                     </p>
                   </div>
                   {isSelected && (
@@ -547,7 +549,7 @@ import { useSearchParams } from "react-router-dom";
              <div>
                <p className="font-semibold">Adults</p>
                <p className="text-sm text-muted-foreground">
-                 KES {priceAdult.toLocaleString()} each
+                 {formatPrice(priceAdult)} each
                </p>
              </div>
              <div className="flex items-center gap-3">
@@ -573,7 +575,7 @@ import { useSearchParams } from "react-router-dom";
              <div>
                <p className="font-semibold">Children</p>
                <p className="text-sm text-muted-foreground">
-                 KES {priceChild.toLocaleString()} each
+                 {formatPrice(priceChild)} each
                </p>
              </div>
              <div className="flex items-center gap-3">
@@ -629,7 +631,7 @@ import { useSearchParams } from "react-router-dom";
                          <div>
                            <p className="font-medium">{activity.name}</p>
                            <p className="text-sm text-muted-foreground">
-                             KES {activity.price.toLocaleString()} per person
+                             {formatPrice(activity.price)} per person
                            </p>
                          </div>
                          {isSelected && (
@@ -703,7 +705,7 @@ import { useSearchParams } from "react-router-dom";
                          <div>
                            <p className="font-medium">{facility.name}</p>
                            <p className="text-sm text-muted-foreground">
-                             KES {facility.price.toLocaleString()} per day
+                             {formatPrice(facility.price)} per day
                            </p>
                          </div>
                        </div>
@@ -797,12 +799,12 @@ import { useSearchParams } from "react-router-dom";
                 </div>
                 <div className="flex justify-between">
                   <span>Adults × {numAdults}</span>
-                  <span>KES {(numAdults * priceAdult).toLocaleString()}</span>
+                  <span>{formatPrice(numAdults * priceAdult)}</span>
                 </div>
                 {numChildren > 0 && (
                   <div className="flex justify-between">
                     <span>Children × {numChildren}</span>
-                    <span>KES {(numChildren * priceChild).toLocaleString()}</span>
+                    <span>{formatPrice(numChildren * priceChild)}</span>
                   </div>
                 )}
               </>
@@ -829,7 +831,7 @@ import { useSearchParams } from "react-router-dom";
                       </span>
                     )}
                   </span>
-                  <span>KES {(f.price * days).toLocaleString()}</span>
+                  <span>{formatPrice(f.price * days)}</span>
                 </div>
               );
             })}
@@ -838,13 +840,13 @@ import { useSearchParams } from "react-router-dom";
                 <span>
                   {a.name} × {a.numberOfPeople}
                 </span>
-                <span>KES {(a.price * a.numberOfPeople).toLocaleString()}</span>
+                <span>{formatPrice(a.price * a.numberOfPeople)}</span>
                </div>
             ))}
              <div className="border-t pt-2 mt-2 flex justify-between font-bold text-lg">
                <span>Total</span>
                <span style={{ color: primaryColor }}>
-                 KES {calculateTotal().toLocaleString()}
+                 {formatPrice(calculateTotal())}
                </span>
              </div>
            </div>
