@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { SignupForm } from "@/components/auth/SignupForm";
+import { SEOHead } from "@/components/SEOHead";
 
 const COLORS = {
   TEAL: "#008080",
@@ -37,6 +38,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F9FA] pb-24">
+      <SEOHead title="Sign In or Sign Up | Realtravo" description="Create an account or sign in to Realtravo to book trips, save favorites, and manage your travel experiences." />
       {/* Always show header on auth page */}
       <Header __fromLayout />
       

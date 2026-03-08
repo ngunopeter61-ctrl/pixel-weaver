@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo, useCallback, memo } from "react";
+import { SEOHead } from "@/components/SEOHead";
 import { useNavigate, Link } from "react-router-dom";
 // Header and MobileBottomBar are rendered in PageLayout
 import { SearchBarWithSuggestions } from "@/components/SearchBarWithSuggestions";
@@ -26,8 +27,7 @@ import { useRatings, sortByRating, RatingData } from "@/hooks/useRatings";
 import { useRealtimeBookings } from "@/hooks/useRealtimeBookings";
 import { useResponsiveLimit } from "@/hooks/useResponsiveLimit";
 
-// Memoized listing card wrapper for performance
-const MemoizedListingCard = memo(ListingCard);
+// ListingCard is already memoized via memo() in its module
 
 const Index = () => {
   const navigate = useNavigate();
@@ -675,6 +675,19 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background pb-0 md:pb-0">
+      <SEOHead
+        title="Realtravo - Book Trips, Hotels & Adventures"
+        description="Discover and book exciting trips, events, hotels, and adventure experiences. Your gateway to unforgettable travel."
+        canonical="https://realtravo.com/"
+        ogImage="https://realtravo.com/fulllogo.png"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Realtravo",
+          "url": "https://realtravo.com",
+          "potentialAction": { "@type": "SearchAction", "target": "https://realtravo.com/?q={search_term_string}", "query-input": "required name=search_term_string" }
+        }}
+      />
       {/* Header is now rendered in PageLayout */}
             
       {/* Hero Section with Search Bar, Background Image, and Category Icons - Hidden when search focused */}
@@ -1281,7 +1294,7 @@ const Index = () => {
                         const ratingData = ratings.get(item.id);
                         return (
                           <div key={item.id} className="flex-shrink-0 w-[75vw] sm:w-[320px] md:w-[380px]">
-                            <MemoizedListingCard
+                            <ListingCard
                               id={item.id}
                               type={itemAny.type || itemAny.table === 'hotels' ? 'HOTEL' : 'ADVENTURE PLACE'}
                               name={item.name}

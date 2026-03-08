@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Clock, X, TrendingUp, Plane, Hotel, Tent, Landmark, ArrowLeft, Calendar, Search as SearchIcon, MapPin, Loader2, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getSessionId } from "@/lib/sessionManager";
@@ -50,7 +50,7 @@ interface TrendingSearch {
   search_count: number;
 }
 
-export const SearchBarWithSuggestions = ({ value, onChange, onSubmit, onSuggestionSearch, onFocus, onBlur, onBack, showBackButton = false }: SearchBarProps) => {
+export const SearchBarWithSuggestions = React.forwardRef<HTMLDivElement, SearchBarProps>(({ value, onChange, onSubmit, onSuggestionSearch, onFocus, onBlur, onBack, showBackButton = false }, _ref) => {
   const { user } = useAuth();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState<SearchResult[]>([]);
@@ -400,4 +400,5 @@ export const SearchBarWithSuggestions = ({ value, onChange, onSubmit, onSuggesti
       </div>
     </div>
   );
-};
+});
+SearchBarWithSuggestions.displayName = "SearchBarWithSuggestions";

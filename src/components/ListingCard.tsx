@@ -1,4 +1,4 @@
-import { useState, memo, useCallback, useMemo, useEffect } from "react";
+import React, { useState, memo, useCallback, useMemo, useEffect } from "react";
 import { MapPin, Heart, Star, Calendar, Ticket } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -245,4 +245,7 @@ const ListingCardComponent = ({
   );
 };
 
-export const ListingCard = memo(ListingCardComponent);
+export const ListingCard = memo(React.forwardRef<HTMLDivElement, ListingCardProps>(
+  (props, ref) => <ListingCardComponent {...props} />
+));
+ListingCard.displayName = "ListingCard";
