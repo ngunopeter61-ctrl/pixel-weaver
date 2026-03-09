@@ -570,7 +570,7 @@ const Index = () => {
               onScroll={handleScroll('featuredCampsites')}
               hasItems={displayCampsites.length > 0} loading={loadingScrollable}
             >
-              {displayCampsites.map((place, i) => renderCard(place, "ADVENTURE PLACE", i, { hidePrice: true }))}
+              {displayCampsites.map((place, i) => renderCard(place, "ADVENTURE PLACE", i, { hidePrice: true, categoryColor: "hsl(142, 70%, 35%)" }))}
             </ScrollSection>
 
             {/* Hotels */}
