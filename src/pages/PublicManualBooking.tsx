@@ -65,21 +65,21 @@ const PublicManualBooking = () => {
 
   const checkItemAvailability = async (): Promise<boolean> => {
     try {
-      let table = '';
-      if (itemType === 'trip' || itemType === 'event') table = 'trips';
-      else if (itemType === 'hotel') table = 'hotels';
-      else if (itemType === 'adventure' || itemType === 'adventure_place') table = 'adventure_places';
+      let result: { approval_status?: string; is_hidden?: boolean | null } | null = null;
       
-      if (!table) return false;
+      if (itemType === 'trip' || itemType === 'event') {
+        const { data } = await supabase.from('trips').select('approval_status, is_hidden').eq('id', itemId!).single();
+        result = data;
+      } else if (itemType === 'hotel') {
+        const { data } = await supabase.from('hotels').select('approval_status, is_hidden').eq('id', itemId!).single();
+        result = data;
+      } else if (itemType === 'adventure' || itemType === 'adventure_place') {
+        const { data } = await supabase.from('adventure_places').select('approval_status, is_hidden').eq('id', itemId!).single();
+        result = data;
+      }
       
-      const { data } = await supabase
-        .from(table)
-        .select('approval_status, is_hidden')
-        .eq('id', itemId)
-        .single();
-      
-      if (!data) return false;
-      return data.approval_status === 'approved' && !data.is_hidden;
+      if (!result) return false;
+      return result.approval_status === 'approved' && !result.is_hidden;
     } catch {
       return false;
     }
