@@ -136,6 +136,13 @@ const PublicManualBooking = () => {
       }
 
       if (data) {
+        // Check if item is hidden or not approved by checking the raw query result
+        const rawCheck = await checkItemAvailability();
+        if (!rawCheck) {
+          toast({ title: "Unavailable", description: "This item is not currently available for booking.", variant: "destructive" });
+          navigate('/');
+          return;
+        }
         setItemDetails(data);
         fetchExistingEntries();
       } else {
