@@ -49,6 +49,7 @@ export interface ListingCardProps {
   place?: string;
   showFlexibleDate?: boolean;
   description?: string;
+  categoryColor?: string;
 }
 
 const ListingCardComponent = ({
