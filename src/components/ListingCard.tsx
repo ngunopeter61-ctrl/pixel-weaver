@@ -208,25 +208,25 @@ const ListingCardComponent = ({
           <span className="text-[11px] font-medium truncate capitalize">{locationString.toLowerCase()}</span>
         </div>
 
-        {/* Bottom row: Rating + Date + Price */}
-        <div className="flex items-end justify-between gap-2 pt-1 mt-auto border-t border-border/50">
-          <div className="flex items-center gap-3 flex-wrap">
-            {/* Rating */}
-            {avgRating && (
-              <div className="flex items-center gap-1">
-                <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                <span className="text-xs font-bold text-foreground">{avgRating.toFixed(1)}</span>
-                {reviewCount && reviewCount > 0 && (
-                  <span className="text-[10px] text-muted-foreground">({reviewCount})</span>
+        {/* Bottom row: Rating + Date + Slots + Price */}
+        <div className="flex items-center justify-between gap-2 pt-1.5 mt-auto border-t border-border/50">
+          <div className="flex items-center gap-2 flex-wrap min-w-0">
+            {/* Rating - always show if available */}
+            {avgRating != null && avgRating > 0 && (
+              <div className="flex items-center gap-0.5 flex-shrink-0">
+                <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
+                <span className="text-[11px] font-bold text-foreground">{avgRating.toFixed(1)}</span>
+                {reviewCount != null && reviewCount > 0 && (
+                  <span className="text-[9px] text-muted-foreground">({reviewCount})</span>
                 )}
               </div>
             )}
 
             {/* Date */}
             {(date || isFlexibleDate) && (
-              <div className="flex items-center gap-1 text-muted-foreground">
-                <Calendar className="h-3 w-3" />
-                <span className="text-[10px] font-semibold">
+              <div className="flex items-center gap-0.5 text-muted-foreground flex-shrink-0">
+                <Calendar className="h-2.5 w-2.5" />
+                <span className="text-[10px] font-medium">
                   {isFlexibleDate ? 'Flexible' : new Date(date!).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })}
                 </span>
               </div>
@@ -234,15 +234,15 @@ const ListingCardComponent = ({
 
             {/* Slots */}
             {tracksAvailability && availableTickets > 0 && !isUnavailable && !fewSlotsRemaining && (
-              <span className="text-[10px] font-semibold text-primary">
-                <Ticket className="inline h-3 w-3 mr-0.5" />{remainingTickets} spots
+              <span className="text-[9px] font-semibold text-primary flex-shrink-0">
+                <Ticket className="inline h-2.5 w-2.5 mr-0.5" />{remainingTickets}
               </span>
             )}
           </div>
 
           {/* Price */}
           {!hidePrice && price != null && price > 0 && (
-            <div className="flex-shrink-0 text-right">
+            <div className="flex-shrink-0">
               <PriceText price={price} isUnavailable={isUnavailable} type={type} />
             </div>
           )}
