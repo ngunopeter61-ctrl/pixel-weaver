@@ -100,6 +100,14 @@ const BookingPage = () => {
       }
       
       if (error) throw error;
+      
+      // Block booking if item is hidden or not approved
+      if (data && (data.is_hidden || (data.approval_status && data.approval_status !== 'approved'))) {
+        toast({ title: "Unavailable", description: "This item is not currently available for booking.", variant: "destructive" });
+        navigate('/');
+        return;
+      }
+      
       setItem(data);
     } catch (error) {
       toast({ title: "Item not found", variant: "destructive" });

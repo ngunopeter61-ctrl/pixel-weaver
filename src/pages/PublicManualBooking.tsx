@@ -63,6 +63,28 @@ const PublicManualBooking = () => {
 
   const isFacilityBased = itemType === 'hotel' || itemType === 'adventure' || itemType === 'adventure_place';
 
+  const checkItemAvailability = async (): Promise<boolean> => {
+    try {
+      let table = '';
+      if (itemType === 'trip' || itemType === 'event') table = 'trips';
+      else if (itemType === 'hotel') table = 'hotels';
+      else if (itemType === 'adventure' || itemType === 'adventure_place') table = 'adventure_places';
+      
+      if (!table) return false;
+      
+      const { data } = await supabase
+        .from(table)
+        .select('approval_status, is_hidden')
+        .eq('id', itemId)
+        .single();
+      
+      if (!data) return false;
+      return data.approval_status === 'approved' && !data.is_hidden;
+    } catch {
+      return false;
+    }
+  };
+
   useEffect(() => {
     if (!itemId || !itemType) {
       navigate('/');
