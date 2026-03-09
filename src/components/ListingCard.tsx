@@ -12,9 +12,12 @@ const PriceText = ({ price, isUnavailable, type }: { price: number; isUnavailabl
   const { formatPrice } = useCurrency();
   const label = ['HOTEL', 'ACCOMMODATION'].includes(type) ? '/night' : '/person';
   return (
-    <div className={cn("flex flex-col items-end", isUnavailable && "text-muted-foreground line-through")}>
-      <span className="text-sm sm:text-base font-bold text-foreground whitespace-nowrap">{formatPrice(price)}</span>
-      <span className="text-[9px] sm:text-[10px] text-muted-foreground font-medium">{label}</span>
+    <div className={cn(
+      "flex items-center gap-1 rounded-md px-2.5 py-1 bg-destructive/10",
+      isUnavailable && "opacity-50 line-through"
+    )}>
+      <span className="text-sm font-bold text-destructive whitespace-nowrap">{formatPrice(price)}</span>
+      <span className="text-[9px] text-destructive/70 font-medium">{label}</span>
     </div>
   );
 };
@@ -183,10 +186,10 @@ const ListingCardComponent = ({
         <div className="flex items-center gap-2 flex-wrap">
           <span
             className={cn(
-              "text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border",
-              !categoryColor && "text-primary bg-primary/10 border-primary/20"
+              "text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md",
+              !categoryColor && "text-primary-foreground bg-primary"
             )}
-            style={categoryColor ? { color: categoryColor, backgroundColor: `${categoryColor}15`, borderColor: `${categoryColor}30` } : undefined}
+            style={categoryColor ? { color: '#fff', backgroundColor: categoryColor } : undefined}
           >
             {displayType}
           </span>
