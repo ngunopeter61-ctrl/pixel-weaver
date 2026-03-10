@@ -30,8 +30,8 @@ import { useCurrency } from "@/contexts/CurrencyContext";
 import { Footer } from "@/components/Footer";
 
 const HotelDetail = () => {
-  const { slug } = useParams();
-  const id = slug ? extractIdFromSlug(slug) : null;
+  const { slug: rawSlug } = useParams();
+  const id = rawSlug ? extractIdFromSlug(rawSlug) : null;
   const navigate = useNavigate();
   const goBack = useSafeBack();
   const { toast } = useToast();
