@@ -13,7 +13,8 @@ import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carouse
 import Autoplay from "embla-carousel-autoplay";
 import { ReviewSection } from "@/components/ReviewSection";
 import { useSavedItems } from "@/hooks/useSavedItems";
-import { generateReferralLink, trackReferralClick } from "@/lib/referralUtils";
+import { trackReferralClick } from "@/lib/referralUtils";
+import { getShareLink } from "@/lib/shareUtils";
 import { useBookingSubmit, BookingFormData } from "@/hooks/useBookingSubmit";
 import { extractIdFromSlug } from "@/lib/slugUtils";
 import { useRealtimeItemAvailability } from "@/hooks/useRealtimeBookings";
@@ -115,20 +116,18 @@ const EventDetail = () => {
   const handleSave = () => id && handleSaveItem(id, "event");
   const handleCopyLink = async () => {
     if (!event) return;
-    toast({ title: "Copying link..." });
-    const refLink = await generateReferralLink(event.id, "event", event.id);
-    await navigator.clipboard.writeText(refLink);
+    const link = getShareLink(event.id, "event", event.name, event.location);
+    await navigator.clipboard.writeText(link);
     toast({ title: "Link Copied!" });
   };
 
   const handleShare = async () => {
     if (!event) return;
-    toast({ title: "Preparing share..." });
-    const refLink = await generateReferralLink(event.id, "event", event.id);
+    const link = getShareLink(event.id, "event", event.name, event.location);
     if (navigator.share) {
-      try { await navigator.share({ title: event.name, url: refLink }); } catch (e) {}
+      try { await navigator.share({ title: event.name, url: link }); } catch (e) {}
     } else { 
-      await navigator.clipboard.writeText(refLink);
+      await navigator.clipboard.writeText(link);
       toast({ title: "Link Copied!" });
     }
   };

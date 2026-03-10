@@ -17,7 +17,8 @@ import { FacilitiesGrid, ActivitiesGrid } from "@/components/detail/FacilityActi
 import { useSavedItems } from "@/hooks/useSavedItems";
 import { extractIdFromSlug } from "@/lib/slugUtils";
 import { useGeolocation, calculateDistance } from "@/hooks/useGeolocation";
-import { trackReferralClick, generateReferralLink } from "@/lib/referralUtils";
+import { trackReferralClick } from "@/lib/referralUtils";
+import { getShareLink } from "@/lib/shareUtils";
 import { DetailNavBar } from "@/components/detail/DetailNavBar";
 import { ImageGalleryModal } from "@/components/detail/ImageGalleryModal";
 import { QuickNavigationBar } from "@/components/detail/QuickNavigationBar";
@@ -487,9 +488,8 @@ z
                    icon={<Copy className="h-5 w-5" />} 
                    label="Copy" 
                    onClick={async () => {
-                     toast({ title: "Copying link..." });
-                     const refLink = await generateReferralLink(id!, "hotel", id!);
-                     await navigator.clipboard.writeText(refLink);
+                     const link = getShareLink(id!, "hotel", hotel.name, hotel.location);
+                     await navigator.clipboard.writeText(link);
                      toast({ title: "Link Copied!" });
                    }} 
                 />
@@ -497,12 +497,11 @@ z
                    icon={<Share2 className="h-5 w-5" />} 
                    label="Share" 
                    onClick={async () => {
-                     toast({ title: "Preparing share..." });
-                     const refLink = await generateReferralLink(id!, "hotel", id!);
+                     const link = getShareLink(id!, "hotel", hotel.name, hotel.location);
                      if (navigator.share) {
-                       try { await navigator.share({ title: hotel.name, url: refLink }); } catch (e) {}
+                       try { await navigator.share({ title: hotel.name, url: link }); } catch (e) {}
                      } else {
-                       await navigator.clipboard.writeText(refLink);
+                       await navigator.clipboard.writeText(link);
                        toast({ title: "Link Copied!" });
                      }
                    }} 
@@ -585,8 +584,7 @@ z
                      icon={<Copy className="h-5 w-5" />} 
                      label="Copy" 
                      onClick={async () => {
-                       toast({ title: "Copying link..." });
-                       const link = await generateReferralLink(id!, "hotel", id!);
+                       const link = getShareLink(id!, "hotel", hotel.name, hotel.location);
                        await navigator.clipboard.writeText(link);
                        toast({ title: "Copied!" });
                      }} 
@@ -595,12 +593,11 @@ z
                      icon={<Share2 className="h-5 w-5" />} 
                      label="Share" 
                      onClick={async () => {
-                       toast({ title: "Preparing share..." });
-                       const refLink = await generateReferralLink(id!, "hotel", id!);
+                       const link = getShareLink(id!, "hotel", hotel.name, hotel.location);
                        if (navigator.share) {
-                         try { await navigator.share({ title: hotel.name, url: refLink }); } catch (e) {}
+                         try { await navigator.share({ title: hotel.name, url: link }); } catch (e) {}
                        } else {
-                         await navigator.clipboard.writeText(refLink);
+                         await navigator.clipboard.writeText(link);
                          toast({ title: "Link Copied!" });
                        }
                      }} 
