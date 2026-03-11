@@ -262,7 +262,7 @@ const AccountsOverview = () => {
         <Button variant="ghost" onClick={() => navigate("/admin")} className="mb-6 font-black uppercase text-[10px] tracking-widest">
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Admin
         </Button>
-
+ 
         <div className="mb-8">
           <Badge className="bg-[#FF7F50] hover:bg-[#FF7F50] border-none px-3 py-1 uppercase font-black tracking-widest text-[10px] rounded-full mb-3">
             Admin
