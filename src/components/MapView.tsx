@@ -21,7 +21,7 @@ export const MapView = ({ listings, onMarkerClick }: MapViewProps) => {
     if (!mapContainer.current || !listings.length) return;
 
     let rafId: number;
-    let mapInstance: mapboxgl.Map | null = null;
+    let mapInstance: any = null;
 
     // Defer map initialization to avoid forced reflow during initial render
     rafId = requestAnimationFrame(() => {
