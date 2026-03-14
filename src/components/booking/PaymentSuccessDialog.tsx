@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Download, X } from "lucide-react";
+import { CheckCircle2, Download } from "lucide-react";
 import { BookingDownloadButton } from "./BookingDownloadButton";
 import { BookingPDFData } from "@/lib/pdfBookingExport";
 import { useNavigate } from "react-router-dom";
